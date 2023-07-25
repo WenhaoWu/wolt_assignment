@@ -2,17 +2,17 @@
 
 // ignore_for_file: implicit_dynamic_parameter
 
-part of 'restaurant.dart';
+part of 'item.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Restaurant _$RestaurantFromJson(Map<String, dynamic> json) => $checkedCreate(
-      'Restaurant',
+Item _$ItemFromJson(Map<String, dynamic> json) => $checkedCreate(
+      'Item',
       json,
       ($checkedConvert) {
-        final val = Restaurant(
+        final val = Item(
           image: $checkedConvert(
               'image', (v) => Image.fromJson(v as Map<String, dynamic>)),
           venue: $checkedConvert(

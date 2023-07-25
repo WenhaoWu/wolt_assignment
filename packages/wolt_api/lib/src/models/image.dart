@@ -1,9 +1,10 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'image.g.dart';
 
 @JsonSerializable()
-class Image {
+class Image extends Equatable {
   const Image({
     required this.blurhash,
     required this.url,
@@ -12,6 +13,9 @@ class Image {
   factory Image.fromJson(Map<String, dynamic> json) =>
       _$ImageFromJson(json);
 
-  final int blurhash;
+  final String blurhash;
   final String url;
+
+  @override
+  List<Object?> get props => [blurhash, url];
 }

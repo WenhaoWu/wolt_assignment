@@ -13,6 +13,7 @@ Venue _$VenueFromJson(Map<String, dynamic> json) => $checkedCreate(
       json,
       ($checkedConvert) {
         final val = Venue(
+          id: $checkedConvert('id', (v) => v as String),
           name: $checkedConvert('name', (v) => v as String),
           location: $checkedConvert(
               'location',

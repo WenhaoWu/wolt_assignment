@@ -13,7 +13,7 @@ Image _$ImageFromJson(Map<String, dynamic> json) => $checkedCreate(
       json,
       ($checkedConvert) {
         final val = Image(
-          blurhash: $checkedConvert('blurhash', (v) => v as int),
+          blurhash: $checkedConvert('blurhash', (v) => v as String),
           url: $checkedConvert('url', (v) => v as String),
         );
         return val;

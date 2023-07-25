@@ -1,3 +1,3 @@
-export 'restaurant.dart';
+export 'item.dart';
 export 'image.dart';
 export 'venue.dart';
