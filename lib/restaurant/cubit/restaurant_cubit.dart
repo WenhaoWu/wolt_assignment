@@ -18,14 +18,14 @@ class RestaurantCubit extends HydratedCubit<RestaurantState> {
   final WoltApiClient _woltApiClient;
   final GeoLocationApiClient _geoLocationApiClient;
 
-  late StreamSubscription<LatLong> control;
+  late StreamSubscription<LatLong> _control;
 
   RestaurantCubit(
     this._woltApiClient,
     this._geoLocationApiClient,
   ) : super(RestaurantState()) {
-    control = _geoLocationApiClient
-        .streamLatLong(duration: const Duration(seconds: 1))
+    _control = _geoLocationApiClient
+        .streamLatLong(duration: const Duration(seconds: 5))
         .listen(_handleLatLong);
   }
 
@@ -38,7 +38,7 @@ class RestaurantCubit extends HydratedCubit<RestaurantState> {
 
   @override
   Future<void> close() async {
-    await control.cancel();
+    await _control.cancel();
     super.close();
   }
 
