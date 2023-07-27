@@ -5,6 +5,7 @@ import 'package:geo_location/geo_location.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wolt_api/wolt_api.dart';
 import 'package:wolt_assignment/restaurant/cubit/restaurant_cubit.dart';
+import 'package:wolt_assignment/restaurant/widget/list_widget.dart';
 import 'package:wolt_assignment/restaurant/widget/loading.dart';
 
 class RestaurantScreen extends StatelessWidget {
@@ -45,9 +46,7 @@ class RestaurantView extends StatelessWidget {
         case RestaurantStatus.loading:
           return const Loading();
         case RestaurantStatus.success:
-          return const Placeholder(
-            color: Colors.blue,
-          );
+          return ListWidget(list: state.restaurants);
         case RestaurantStatus.failure:
           return const Placeholder(
             color: Colors.green,
