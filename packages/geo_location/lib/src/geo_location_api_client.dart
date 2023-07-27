@@ -1,5 +1,7 @@
 import 'package:geo_location/src/model/lat_long.dart';
 
+const int refreshInterval = 10; // In seconds
+
 const mockData = [
   [60.170187, 24.930599],
   [60.169418, 24.931618],
@@ -18,7 +20,7 @@ const mockData = [
 /// {@endtemplate}
 class GeoLocationApiClient {
   Stream<LatLong> streamLatLong({
-    Duration duration = Duration.zero,
+    Duration duration = const Duration(seconds: refreshInterval),
   }) {
     final listOfLatLon = <LatLong>[];
     for (var i = 0; i < 10; i++) {

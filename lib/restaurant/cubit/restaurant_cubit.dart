@@ -24,9 +24,7 @@ class RestaurantCubit extends HydratedCubit<RestaurantState> {
     this._woltApiClient,
     this._geoLocationApiClient,
   ) : super(RestaurantState()) {
-    _control = _geoLocationApiClient
-        .streamLatLong(duration: const Duration(seconds: 5))
-        .listen(_handleLatLong);
+    _control = _geoLocationApiClient.streamLatLong().listen(_handleLatLong);
   }
 
   @override
