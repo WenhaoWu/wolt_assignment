@@ -21,7 +21,7 @@ Venue _$VenueFromJson(Map<String, dynamic> json) => $checkedCreate(
                   .map((e) => (e as num).toDouble())
                   .toList()),
           shortDescription:
-              $checkedConvert('short_description', (v) => v as String),
+              $checkedConvert('short_description', (v) => v as String?),
         );
         return val;
       },

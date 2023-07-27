@@ -49,11 +49,12 @@ class RestaurantCubit extends HydratedCubit<RestaurantState> {
         longitude: latLong.longitude,
       );
 
-      final restaurants = items.take(maxItemPerPage).map(Restaurant.fromItem);
+      final restaurants =
+          items.take(maxItemPerPage).map(Restaurant.fromItem).toList();
 
       emit(state.copyWith(
         status: RestaurantStatus.success,
-        restaurants: restaurants.toList(),
+        restaurants: restaurants,
       ));
     } on Exception {
       emit(state.copyWith(status: RestaurantStatus.failure));

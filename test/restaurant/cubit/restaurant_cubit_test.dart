@@ -6,7 +6,6 @@ import 'package:wolt_api/wolt_api.dart';
 import 'package:wolt_assignment/restaurant/restaurant.dart';
 
 import '../../helpers/hydrated_bloc.dart';
-import '../../helpers/random.dart';
 
 // ignore: must_be_immutable
 class MockRestaurant extends Mock implements Restaurant {}
@@ -106,7 +105,7 @@ void main() {
         ),
         RestaurantState(
           status: RestaurantStatus.failure,
-          restaurants: [],
+          restaurants: const [],
         ),
       ],
     );

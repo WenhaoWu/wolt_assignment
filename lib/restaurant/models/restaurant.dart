@@ -26,7 +26,7 @@ class Restaurant extends Equatable {
   factory Restaurant.fromItem(Item item) {
     return Restaurant(
       name: item.venue.name,
-      shortDescription: item.venue.shortDescription,
+      shortDescription: item.venue.shortDescription ?? "",
       imgUrl: item.image.url,
       isFavourite: false,
     );

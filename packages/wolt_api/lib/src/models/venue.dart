@@ -9,7 +9,7 @@ class Venue extends Equatable {
     required this.id,
     required this.name,
     required this.location,
-    required this.shortDescription,
+    this.shortDescription,
   });
 
   factory Venue.fromJson(Map<String, dynamic> json) => _$VenueFromJson(json);
@@ -18,7 +18,7 @@ class Venue extends Equatable {
   final String name;
   final List<double> location;
   @JsonKey(name: "short_description")
-  final String shortDescription;
+  final String? shortDescription;
 
   @override
   List<Object?> get props => [id, name, location, shortDescription];
