@@ -49,8 +49,13 @@ class RestaurantCubit extends HydratedCubit<RestaurantState> {
         longitude: latLong.longitude,
       );
 
-      final restaurants =
-          items.take(maxItemPerPage).map(Restaurant.fromItem).toList();
+      final restaurants = items.take(maxItemPerPage).map((item) {
+        final r = Restaurant.fromItem(item);
+        if (state.favIDs.contains(r.id)) {
+          return r.copyWith(isFavourite: true);
+        }
+        return r;
+      }).toList();
 
       emit(state.copyWith(
         status: RestaurantStatus.success,
@@ -59,5 +64,21 @@ class RestaurantCubit extends HydratedCubit<RestaurantState> {
     } on Exception {
       emit(state.copyWith(status: RestaurantStatus.failure));
     }
+  }
+
+  void toggleFavourite(Restaurant restaurant) {
+    final restaurants = List<Restaurant>.from(state.restaurants);
+    final favIDs = List<String>.from(state.favIDs);
+
+    final target = restaurant.copyWith(isFavourite: !restaurant.isFavourite);
+    restaurants[restaurants.indexWhere((element) => element.id == target.id)] =
+        target;
+
+    emit(
+      state.copyWith(
+        restaurants: restaurants,
+        favIDs: favIDs..add(restaurant.id),
+      ),
+    );
   }
 }

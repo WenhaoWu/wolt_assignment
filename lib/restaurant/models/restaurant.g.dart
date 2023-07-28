@@ -11,6 +11,7 @@ Restaurant _$RestaurantFromJson(Map<String, dynamic> json) => $checkedCreate(
       json,
       ($checkedConvert) {
         final val = Restaurant(
+          id: $checkedConvert('id', (v) => v as String),
           name: $checkedConvert('name', (v) => v as String),
           shortDescription:
               $checkedConvert('short_description', (v) => v as String),
@@ -28,6 +29,7 @@ Restaurant _$RestaurantFromJson(Map<String, dynamic> json) => $checkedCreate(
 
 Map<String, dynamic> _$RestaurantToJson(Restaurant instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
       'short_description': instance.shortDescription,
       'img_url': instance.imgUrl,

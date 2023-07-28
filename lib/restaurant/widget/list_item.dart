@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:wolt_assignment/restaurant/cubit/restaurant_cubit.dart';
 import 'package:wolt_assignment/restaurant/models/models.dart';
 
 class ListItem extends StatelessWidget {
@@ -52,12 +54,17 @@ class ListItem extends StatelessWidget {
                   ),
                 ),
               ),
-              Icon(
-                restaurant.isFavourite
-                    ? Icons.favorite
-                    : Icons.favorite_outline,
-                size: 35,
-                color: Colors.black,
+              IconButton(
+                icon: Icon(
+                  restaurant.isFavourite
+                      ? Icons.favorite
+                      : Icons.favorite_outline,
+                  size: 35,
+                  color: Colors.black,
+                  grade: 0.5,
+                ),
+                onPressed: () =>
+                    context.read<RestaurantCubit>().toggleFavourite(restaurant),
               ),
             ],
           ),

@@ -43,6 +43,7 @@ void main() {
       final state = RestaurantState(
         status: RestaurantStatus.success,
         restaurants: List.filled(randomInt(), randomRestaurant()),
+        favIDs: List.filled(randomInt(), randomStr()),
       );
       expect(
         RestaurantState.fromJson(state.toJson()),

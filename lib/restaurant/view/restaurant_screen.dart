@@ -66,7 +66,7 @@ class RestaurantView extends StatelessWidget {
           case RestaurantStatus.initial:
             return const Loading();
           case RestaurantStatus.loading:
-            throw Exception("No view for loading");
+            return const Loading();
           case RestaurantStatus.success:
             return ListWidget(list: state.restaurants);
           case RestaurantStatus.failure:

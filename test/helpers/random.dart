@@ -20,6 +20,7 @@ int randomInt({int min = 0, int max = 10}) {
 
 Restaurant randomRestaurant() {
   return Restaurant(
+    id: randomStr(),
     name: randomStr(),
     shortDescription: randomStr(),
     imgUrl: randomStr(),

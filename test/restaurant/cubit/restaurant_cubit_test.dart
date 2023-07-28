@@ -23,6 +23,8 @@ void main() {
   setUp(() async {
     woltApiClient = MockWoltApiClient();
     geoLocationApiClient = MockGeoLocationApiClient();
+    when(() => geoLocationApiClient.streamLatLong())
+        .thenAnswer((_) => const Stream.empty());
   });
 
   test('initial state is correct', () {
@@ -52,6 +54,7 @@ void main() {
       ),
     );
     const restaurant = Restaurant(
+      id: "foo3",
       name: "foo4",
       shortDescription: "foo5",
       imgUrl: "foo2",
@@ -60,10 +63,6 @@ void main() {
 
     blocTest<RestaurantCubit, RestaurantState>(
       'emits no state',
-      setUp: () {
-        when(() => geoLocationApiClient.streamLatLong())
-            .thenAnswer((_) => const Stream.empty());
-      },
       build: () => RestaurantCubit(woltApiClient, geoLocationApiClient),
       expect: () => [],
     );
@@ -107,6 +106,33 @@ void main() {
           status: RestaurantStatus.failure,
           restaurants: const [],
         ),
+      ],
+    );
+  });
+
+  group('toggle favourite item', () {
+    const restaurant = Restaurant(
+      id: "foo3",
+      name: "foo4",
+      shortDescription: "foo5",
+      imgUrl: "foo2",
+      isFavourite: false,
+    );
+
+    blocTest<RestaurantCubit, RestaurantState>(
+      'works as expected',
+      build: () => RestaurantCubit(woltApiClient, geoLocationApiClient),
+      seed: () => RestaurantState(restaurants: const [restaurant]),
+      act: (cubit) => cubit.toggleFavourite(restaurant),
+      expect: () => [
+        isA<RestaurantState>()
+            .having((state) => state.favIDs, "favIDs", ["foo3"])
+            .having((state) => state.status.isInitial, "isInitial", true)
+            .having(
+              (state) => state.restaurants,
+              "restaurants",
+              [restaurant.copyWith(isFavourite: true)],
+            )
       ],
     );
   });

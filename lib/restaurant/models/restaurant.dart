@@ -6,6 +6,7 @@ part 'restaurant.g.dart';
 
 @JsonSerializable()
 class Restaurant extends Equatable {
+  final String id;
   final String name;
   final String shortDescription;
   final String imgUrl;
@@ -17,6 +18,7 @@ class Restaurant extends Equatable {
   Map<String, dynamic> toJson() => _$RestaurantToJson(this);
 
   const Restaurant({
+    required this.id,
     required this.name,
     required this.shortDescription,
     required this.imgUrl,
@@ -25,6 +27,7 @@ class Restaurant extends Equatable {
 
   factory Restaurant.fromItem(Item item) {
     return Restaurant(
+      id: item.venue.id,
       name: item.venue.name,
       shortDescription: item.venue.shortDescription ?? "",
       imgUrl: item.image.url,
@@ -34,12 +37,14 @@ class Restaurant extends Equatable {
 
   Restaurant copyWith({bool? isFavourite}) {
     return Restaurant(
-        name: name,
-        shortDescription: shortDescription,
-        imgUrl: imgUrl,
-        isFavourite: isFavourite ?? this.isFavourite);
+      id: id,
+      name: name,
+      shortDescription: shortDescription,
+      imgUrl: imgUrl,
+      isFavourite: isFavourite ?? this.isFavourite,
+    );
   }
 
   @override
-  List<Object?> get props => [name, shortDescription, imgUrl, isFavourite];
+  List<Object?> get props => [id, name, shortDescription, imgUrl, isFavourite];
 }
