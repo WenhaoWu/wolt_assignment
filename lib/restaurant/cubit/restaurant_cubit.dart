@@ -68,17 +68,20 @@ class RestaurantCubit extends HydratedCubit<RestaurantState> {
 
   void toggleFavourite(Restaurant restaurant) {
     final restaurants = List<Restaurant>.from(state.restaurants);
-    final favIDs = List<String>.from(state.favIDs);
+    final favIDs = Set<String>.from(state.favIDs);
 
     final target = restaurant.copyWith(isFavourite: !restaurant.isFavourite);
     restaurants[restaurants.indexWhere((element) => element.id == target.id)] =
         target;
 
+    if (target.isFavourite) {
+      favIDs.add(restaurant.id);
+    } else {
+      favIDs.remove(restaurant.id);
+    }
+
     emit(
-      state.copyWith(
-        restaurants: restaurants,
-        favIDs: favIDs..add(restaurant.id),
-      ),
+      state.copyWith(restaurants: restaurants, favIDs: favIDs),
     );
   }
 }

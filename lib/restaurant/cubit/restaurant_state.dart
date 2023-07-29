@@ -16,14 +16,14 @@ extension RestaurantListStatusX on RestaurantStatus {
 class RestaurantState extends Equatable {
   final RestaurantStatus status;
   final List<Restaurant> restaurants;
-  final List<String> favIDs;
+  final Set<String> favIDs;
 
   RestaurantState({
     this.status = RestaurantStatus.initial,
     List<Restaurant>? restaurants,
-    List<String>? favIDs,
+    Set<String>? favIDs,
   })  : restaurants = List.unmodifiable(restaurants ?? []),
-        favIDs = List.unmodifiable(favIDs ?? []);
+        favIDs = Set.unmodifiable(favIDs ?? []);
 
   factory RestaurantState.fromJson(Map<String, dynamic> json) =>
       _$RestaurantStateFromJson(json);
@@ -36,7 +36,7 @@ class RestaurantState extends Equatable {
   RestaurantState copyWith({
     RestaurantStatus? status,
     List<Restaurant>? restaurants,
-    List<String>? favIDs,
+    Set<String>? favIDs,
   }) {
     return RestaurantState(
       status: status ?? this.status,

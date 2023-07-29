@@ -120,19 +120,35 @@ void main() {
     );
 
     blocTest<RestaurantCubit, RestaurantState>(
-      'works as expected',
+      'Can toggle restaurant on',
       build: () => RestaurantCubit(woltApiClient, geoLocationApiClient),
       seed: () => RestaurantState(restaurants: const [restaurant]),
       act: (cubit) => cubit.toggleFavourite(restaurant),
       expect: () => [
         isA<RestaurantState>()
-            .having((state) => state.favIDs, "favIDs", ["foo3"])
-            .having((state) => state.status.isInitial, "isInitial", true)
-            .having(
-              (state) => state.restaurants,
-              "restaurants",
-              [restaurant.copyWith(isFavourite: true)],
-            )
+            .having((state) => state.favIDs, "favIDs", ["foo3"]).having(
+          (state) => state.restaurants,
+          "restaurants",
+          [restaurant.copyWith(isFavourite: true)],
+        ),
+      ],
+    );
+
+    blocTest<RestaurantCubit, RestaurantState>(
+      'Can toggle restaurant off',
+      build: () => RestaurantCubit(woltApiClient, geoLocationApiClient),
+      seed: () => RestaurantState(
+        restaurants: [restaurant.copyWith(isFavourite: true)],
+        favIDs: const {"foo3"},
+      ),
+      act: (cubit) => cubit.toggleFavourite(restaurant.copyWith(isFavourite: true)),
+      expect: () => [
+        isA<RestaurantState>()
+            .having((state) => state.favIDs, "favIDs", []).having(
+          (state) => state.restaurants,
+          "restaurants",
+          [restaurant.copyWith(isFavourite: false)],
+        ),
       ],
     );
   });
