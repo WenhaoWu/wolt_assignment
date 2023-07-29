@@ -2,6 +2,9 @@
 
 A new Flutter project.
 
+# Demo
+![Success](./docs/success.png)  ![Loading](./docs/loading.png)
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
