@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wolt_assignment/restaurant/cubit/restaurant_cubit.dart';
 import 'package:wolt_assignment/restaurant/models/models.dart';
+import 'package:wolt_assignment/restaurant/widget/animated_icon.dart';
 
 class ListItem extends StatelessWidget {
   final Restaurant restaurant;
@@ -17,10 +18,14 @@ class ListItem extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           child: Row(
             children: [
-              Image.network(
-                restaurant.imgUrl,
-                height: 50,
-                width: 50,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.network(
+                  restaurant.imgUrl,
+                  height: 75,
+                  width: 75,
+                  fit: BoxFit.cover,
+                ),
               ),
               Expanded(
                 child: Align(
@@ -34,7 +39,7 @@ class ListItem extends StatelessWidget {
                           restaurant.name,
                           style: GoogleFonts.montserrat(
                             fontSize: 15.0,
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                         const SizedBox(
@@ -45,7 +50,7 @@ class ListItem extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: GoogleFonts.montserrat(
-                            fontSize: 15.0,
+                            fontSize: 13.0,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -54,18 +59,7 @@ class ListItem extends StatelessWidget {
                   ),
                 ),
               ),
-              IconButton(
-                icon: Icon(
-                  restaurant.isFavourite
-                      ? Icons.favorite
-                      : Icons.favorite_outline,
-                  size: 35,
-                  color: Colors.black,
-                  grade: 0.5,
-                ),
-                onPressed: () =>
-                    context.read<RestaurantCubit>().toggleFavourite(restaurant),
-              ),
+              FavouriteAnimatedIcon(restaurant: restaurant),
             ],
           ),
         ),

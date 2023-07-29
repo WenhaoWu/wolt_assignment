@@ -29,10 +29,12 @@ class RestaurantScreen extends StatelessWidget {
       systemOverlayStyle: SystemUiOverlayStyle.light,
       elevation: 0.0,
       centerTitle: true,
-      title: Text(
-        "Restaurant",
-        style:
-            GoogleFonts.montserrat(fontSize: 26.0, fontWeight: FontWeight.bold),
+      title: BlocBuilder<RestaurantCubit, RestaurantState>(
+        builder: (context, state) => Text(
+          state.status.name,
+          style: GoogleFonts.montserrat(
+              fontSize: 26.0, fontWeight: FontWeight.bold),
+        ),
       ),
       leading: BlocBuilder<RestaurantCubit, RestaurantState>(
         builder: (context, state) => state.status.isLoading
