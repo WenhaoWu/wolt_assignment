@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wolt_assignment/restaurant/cubit/restaurant_cubit.dart';
 import 'package:wolt_assignment/restaurant/models/models.dart';
-import 'package:wolt_assignment/restaurant/widget/animated_icon.dart';
+import 'package:wolt_assignment/restaurant/widget/favourite_animated_icon.dart';
 
 class ListItem extends StatelessWidget {
   final Restaurant restaurant;
