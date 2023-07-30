@@ -59,7 +59,11 @@ class ListItem extends StatelessWidget {
                   ),
                 ),
               ),
-              FavouriteAnimatedIcon(restaurant: restaurant),
+              FavouriteAnimatedIcon(
+                restaurant: restaurant,
+                key: ValueKey<String>(
+                    "${restaurant.id}-${restaurant.isFavourite}"),
+              ),
             ],
           ),
         ),

@@ -108,6 +108,30 @@ void main() {
         ),
       ],
     );
+
+    blocTest<RestaurantCubit, RestaurantState>(
+      'emits success state with favIDs',
+      setUp: () {
+        when(() => geoLocationApiClient.streamLatLong())
+            .thenAnswer((_) => Stream.value(LatLong(1, 1)));
+        when(() => woltApiClient.getItems(latitude: 1, longitude: 1))
+            .thenAnswer((_) => Future.value([item]));
+      },
+      seed: () => RestaurantState(favIDs: const {"foo3"}),
+      build: () => RestaurantCubit(woltApiClient, geoLocationApiClient),
+      expect: () => [
+        RestaurantState(
+          status: RestaurantStatus.loading,
+          restaurants: List.empty(),
+          favIDs: const {"foo3"},
+        ),
+        RestaurantState(
+          status: RestaurantStatus.success,
+          restaurants: [restaurant.copyWith(isFavourite: true)],
+          favIDs: const {"foo3"},
+        ),
+      ],
+    );
   });
 
   group('toggle favourite item', () {
@@ -141,7 +165,8 @@ void main() {
         restaurants: [restaurant.copyWith(isFavourite: true)],
         favIDs: const {"foo3"},
       ),
-      act: (cubit) => cubit.toggleFavourite(restaurant.copyWith(isFavourite: true)),
+      act: (cubit) =>
+          cubit.toggleFavourite(restaurant.copyWith(isFavourite: true)),
       expect: () => [
         isA<RestaurantState>()
             .having((state) => state.favIDs, "favIDs", []).having(

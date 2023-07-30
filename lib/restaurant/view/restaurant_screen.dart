@@ -18,13 +18,13 @@ class RestaurantScreen extends StatelessWidget {
         context.read<GeoLocationApiClient>(),
       ),
       child: Scaffold(
-        appBar: _buildAppBar(),
+        appBar: _buildAppBar(context),
         body: const RestaurantView(),
       ),
     );
   }
 
-  AppBar _buildAppBar() {
+  AppBar _buildAppBar(BuildContext context) {
     return AppBar(
       systemOverlayStyle: SystemUiOverlayStyle.light,
       elevation: 0.0,
@@ -52,6 +52,14 @@ class RestaurantScreen extends StatelessWidget {
               )
             : const SizedBox(),
       ),
+      actions: [
+        Builder(builder: (context) {
+          return IconButton(
+            onPressed: () => context.read<RestaurantCubit>().nextBatch(),
+            icon: const Icon(Icons.refresh),
+          );
+        }),
+      ],
     );
   }
 }

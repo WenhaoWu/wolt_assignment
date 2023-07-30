@@ -33,4 +33,20 @@ class GeoLocationApiClient {
       (count) => listOfLatLon[count % 10],
     );
   }
+
+  LatLong nextLatLong({LatLong? prev}) {
+    final listOfLatLon = <LatLong>[];
+    for (var i = 0; i < 10; i++) {
+      final item = LatLong(mockData[i].first, mockData[i].last);
+      listOfLatLon.add(item);
+    }
+
+    final prevIndex = prev == null ? -1 : listOfLatLon.indexOf(prev);
+
+    final index = prevIndex + 1;
+
+    final indexCap = index == 10 ? 0 : index;
+
+    return listOfLatLon[indexCap];
+  }
 }

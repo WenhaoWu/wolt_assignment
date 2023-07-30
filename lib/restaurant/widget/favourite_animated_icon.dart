@@ -29,8 +29,11 @@ class _FavouriteAnimatedIconState extends State<FavouriteAnimatedIcon> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          context.read<RestaurantCubit>().toggleFavourite(widget.restaurant);
           _showFirstIcon = !_showFirstIcon;
+          // Give time for animation
+          Future.delayed(const Duration(milliseconds: 500), () {
+            context.read<RestaurantCubit>().toggleFavourite(widget.restaurant);
+          });
         });
       },
       child: AnimatedSwitcher(

@@ -20,6 +20,8 @@ class RestaurantCubit extends HydratedCubit<RestaurantState> {
 
   late StreamSubscription<LatLong> _control;
 
+  LatLong? _currentLatLong;
+
   RestaurantCubit(
     this._woltApiClient,
     this._geoLocationApiClient,
@@ -41,6 +43,8 @@ class RestaurantCubit extends HydratedCubit<RestaurantState> {
   }
 
   Future _handleLatLong(LatLong latLong) async {
+    _currentLatLong = latLong;
+
     emit(state.copyWith(status: RestaurantStatus.loading));
 
     try {
@@ -48,10 +52,12 @@ class RestaurantCubit extends HydratedCubit<RestaurantState> {
         latitude: latLong.latitude,
         longitude: latLong.longitude,
       );
+      
+      final favIDs = state.favIDs;
 
       final restaurants = items.take(maxItemPerPage).map((item) {
         final r = Restaurant.fromItem(item);
-        if (state.favIDs.contains(r.id)) {
+        if (favIDs.contains(r.id)) {
           return r.copyWith(isFavourite: true);
         }
         return r;
@@ -83,5 +89,10 @@ class RestaurantCubit extends HydratedCubit<RestaurantState> {
     emit(
       state.copyWith(restaurants: restaurants, favIDs: favIDs),
     );
+  }
+
+  void nextBatch() {
+    final latLong = _geoLocationApiClient.nextLatLong(prev: _currentLatLong);
+    _handleLatLong(latLong);
   }
 }
